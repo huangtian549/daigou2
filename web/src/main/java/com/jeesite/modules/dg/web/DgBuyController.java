@@ -85,10 +85,13 @@ public class DgBuyController extends BaseController {
 		DgBuy dgBuy = dgBuyService.get(ids);
 		if (dgBuy != null) {
 			Pattern pattern = Pattern.compile("201[0-9]{5}");
-			String path = "/home" + dgBuy.getPic(); 
+			String path =  dgBuy.getPic(); 
 			System.out.println();
 			String[] pathArray = path.split(",");
 			for (int i = 0; i < pathArray.length; i++) {
+				if (pathArray[i].length() == 0) {
+					continue;
+				}
 				Matcher matcher = pattern.matcher(pathArray[i]);
 				String dateString = "";
 				while(matcher.find()){
@@ -100,11 +103,11 @@ public class DgBuyController extends BaseController {
 					continue;
 				}
 				File destFile = new File("/root/userfiles/fileupload/" + dateString);
-				File file = new File(pathArray[i]);
+				File file = new File("/home" + pathArray[i]);
 				if (file.exists()) {
 					try {
 						FileUtils.copyFileToDirectory(file, destFile);
-						System.out.println("copy finished");
+						System.out.println("copy finished:" + pathArray[i]);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
