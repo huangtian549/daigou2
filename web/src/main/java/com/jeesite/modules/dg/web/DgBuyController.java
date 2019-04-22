@@ -93,8 +93,10 @@ public class DgBuyController extends BaseController {
 				String dateString = "";
 				while(matcher.find()){
 					dateString = matcher.group();
+					System.out.println("find date:" + dateString);
 				}
 				if (dateString.length() == 0) {
+					System.out.println("cannot find date:" + dateString);
 					continue;
 				}
 				File destFile = new File("/root/userfiles/fileupload/" + dateString);
@@ -102,9 +104,12 @@ public class DgBuyController extends BaseController {
 				if (file.exists()) {
 					try {
 						FileUtils.copyFileToDirectory(file, destFile);
+						System.out.println("copy finished");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+				}else {
+					System.out.println("path not exist:" + file.getAbsolutePath());
 				}
 				
 			}
