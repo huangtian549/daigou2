@@ -78,7 +78,7 @@ public class DgBuyController extends BaseController {
 	
 	@RequestMapping(value = "processPic")
 	public void processPic() {
-		processOne("/data/workshop/20180413/debb587ba2b4478dba88cfebb2643d7c.jpg,,/data/workshop/20180413/bacf1927737842c8833e43c56d6e5f52.jpg,");
+		processOne("2370");
 	}
 	
 	private void processOne(String ids) {
