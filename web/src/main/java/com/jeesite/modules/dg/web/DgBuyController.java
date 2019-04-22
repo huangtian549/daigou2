@@ -100,7 +100,7 @@ public class DgBuyController extends BaseController {
 					continue;
 				}
 				File destFile = new File("/root/userfiles/fileupload/" + dateString);
-				File file = new File(path);
+				File file = new File(pathArray[i]);
 				if (file.exists()) {
 					try {
 						FileUtils.copyFileToDirectory(file, destFile);
