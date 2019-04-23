@@ -5,6 +5,9 @@ package com.jeesite.modules.dg.entity;
 
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
+
+import javax.validation.Valid;
+
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +16,11 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.common.utils.excel.annotation.ExcelField;
+import com.jeesite.common.utils.excel.annotation.ExcelFields;
+import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
+import com.jeesite.common.utils.excel.fieldtype.CompanyType;
+import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 
 /**
  * dg_buyEntity
@@ -72,6 +80,9 @@ public class DgBuy extends DataEntity<DgBuy> {
 	private String startDate;
 	private String endDate;
 	
+	
+	
+	
 	public DgBuy() {
 		this(null);
 	}
@@ -88,6 +99,15 @@ public class DgBuy extends DataEntity<DgBuy> {
 		this.ids = ids;
 	}
 	
+	@Valid
+	@ExcelFields({
+		@ExcelField(title="姓名", attrName="name", align=Align.CENTER, sort=40),
+		@ExcelField(title="微信", attrName="wechat", align=Align.LEFT, sort=50),
+		@ExcelField(title="描述", attrName="description", align=Align.CENTER, sort=100),
+		@ExcelField(title="价格", attrName="pricecn", align=Align.CENTER, sort=40),
+		@ExcelField(title="地址", attrName="address", align=Align.CENTER, sort=80),
+		@ExcelField(title="购买日期", attrName="purchasedate", align=Align.CENTER, sort=900, type=ExcelField.Type.EXPORT, dataFormat="yyyy-MM-dd"),
+	})
 	@Length(min=0, max=32, message="name长度不能超过 32 个字符")
 	public String getName() {
 		return name;
