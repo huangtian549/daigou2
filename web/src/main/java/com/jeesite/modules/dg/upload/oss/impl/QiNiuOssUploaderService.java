@@ -90,7 +90,7 @@ public class QiNiuOssUploaderService implements OssUploadService {
             result = defaultPutRet.key;
         } catch (QiniuException ex) {
             Response r = ex.response;
-//            log.error(r.toString());
+            log.error(r.toString());
         }
         return result;
     }
