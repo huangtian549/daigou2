@@ -140,8 +140,8 @@ public class DgBuyController extends BaseController {
 				if (dateString.length() == 0) {
 					continue;
 				}
-				File destFile = new File("/Users/liunaikun/Downloads/aa"); //new File("/root/userfiles/fileupload/" + dateString);
-				File file = new File("/Users/liunaikun/Downloads/t1553083025925_41929.jpeg");//new File("/home" + pathArray[i]);
+				File destFile =  new File("/root/userfiles/fileupload/" + dateString);
+				File file = new File("/home" + pathArray[i]);
 				if (file.exists()) {
 					try {
 						FileUtils.copyFileToDirectory(file, destFile);
