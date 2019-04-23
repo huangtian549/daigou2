@@ -89,8 +89,7 @@ public class QiNiuOssUploaderService implements OssUploadService {
             DefaultPutRet defaultPutRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             result = defaultPutRet.key;
         } catch (QiniuException ex) {
-            Response r = ex.response;
-            log.error(r.toString());
+            log.error(ex.getMessage());
         }
         return result;
     }
