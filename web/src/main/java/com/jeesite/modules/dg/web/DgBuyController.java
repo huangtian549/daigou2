@@ -104,22 +104,27 @@ public class DgBuyController extends BaseController {
 	
 	@RequestMapping(value = "processPic")
 	public void processPic(HttpServletRequest request, HttpServletResponse response) {
-		Page<DgBuy> page = new Page<>(request, response);
-		page.setPageSize(100);
-		for (int i = 1; i < 30; i++) {
-			page.setPageNo(i);
-			DgBuy dgBuy = new DgBuy();
-			dgBuy.setPage(page);
-			Page<DgBuy> page2 = dgBuyService.findPage(dgBuy );
-			List<DgBuy>list = page2.getList();
-			for (DgBuy dgBuy2 : list) {
-				try {
-					processOne(dgBuy2);
-				} catch (Exception e) {
-					System.out.println("process error:" + dgBuy2.getId());
-				}
-			}
-		}
+//		Page<DgBuy> page = new Page<>(request, response);
+//		page.setPageSize(100);
+//		for (int i = 1; i < 30; i++) {
+//			page.setPageNo(i);
+//			DgBuy dgBuy = new DgBuy();
+//			dgBuy.setPage(page);
+//			Page<DgBuy> page2 = dgBuyService.findPage(dgBuy );
+//			List<DgBuy>list = page2.getList();
+//			for (DgBuy dgBuy2 : list) {
+//				try {
+//					processOne(dgBuy2);
+//				} catch (Exception e) {
+//					System.out.println("process error:" + dgBuy2.getId() + ":" + e.getMessage());
+//				}
+//			}
+//		}
+		
+		DgBuy dgBuy = new DgBuy();
+		dgBuy.setIds("2370");
+		DgBuy dgBuy2 = dgBuyService.get(dgBuy);
+		processOne(dgBuy2);
 	}
 	
 	private void processOne(DgBuy dgBuy) {
@@ -140,14 +145,17 @@ public class DgBuyController extends BaseController {
 				if (dateString.length() == 0) {
 					continue;
 				}
-				File destFile =  new File("/root/userfiles/fileupload/" + dateString);
-				File file = new File("/home" + pathArray[i]);
+				File destFile = new File("/root/userfiles/fileupload/" + dateString); //new File("/Users/liunaikun/Downloads/aa"); //
+				File file = new File("/home" + pathArray[i]); //new File("/Users/liunaikun/Downloads/20190323/02.JPG");//
 				if (file.exists()) {
 					try {
 						FileUtils.copyFileToDirectory(file, destFile);
 						String md5 = Md5Utils.md5File(file);
 						Long fileSize = file.length();
-						String qiniuId = uploadToQiNiu(md5, dateString, fileSize, file.getName());
+						String name = file.getName();
+						String[] arr = name.split("\\.");
+						String fileExtension = arr[1];
+						String qiniuId = uploadToQiNiu(md5, dateString, fileSize, file.getName(),fileExtension);
 						dgBuy.setRemark1(qiniuId);
 						dgBuyService.save(dgBuy);
 						System.out.println("copy finished:" + pathArray[i]);
@@ -164,10 +172,10 @@ public class DgBuyController extends BaseController {
 	}
 	
 	
-	private String uploadToQiNiu(String md5, String dateString, Long fileSize, String fileName) {
+	private String uploadToQiNiu(String md5, String dateString, Long fileSize, String fileName, String fileExtension) {
 		FileEntity fileEntity = new FileEntity();
 		fileEntity.setFileContentType("image/jpeg");
-		fileEntity.setFileExtension("jpeg");
+		fileEntity.setFileExtension(fileExtension);
 		fileEntity.setFileId(ToolUtil.getNum19());
 		fileEntity.setFileMd5(md5);
 		fileEntity.setFilePath(dateString);

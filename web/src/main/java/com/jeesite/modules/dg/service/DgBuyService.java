@@ -74,20 +74,20 @@ public class DgBuyService extends CrudService<DgBuyDao, DgBuy> {
 		
 		
 		
-		List<FileUpload> list = FileUploadUtils.findFileUpload(dgBuy.getId(), "dgBuy_image");
-		StringBuilder sBuilder = new StringBuilder();
-		
-		if (list != null) {		
-			for (FileUpload fileUpload : list) {
-				sBuilder.append(fileUpload.getFileEntity().getFilePath() ).append(fileUpload.getFileEntity().getFileId()).append(".").append(fileUpload.getFileEntity().getFileExtension()).append(",");
-			}
-			String picString = sBuilder.toString();
-			if (picString.endsWith(",")) {
-				picString = picString.substring(0, picString.length() - 1);
-			}
-			dgBuy.setPic(sBuilder.toString());
-			super.update(dgBuy);
-		}
+//		List<FileUpload> list = FileUploadUtils.findFileUpload(dgBuy.getId(), "dgBuy_image");
+//		StringBuilder sBuilder = new StringBuilder();
+//		
+//		if (list != null) {		
+//			for (FileUpload fileUpload : list) {
+//				sBuilder.append(fileUpload.getFileEntity().getFilePath() ).append(fileUpload.getFileEntity().getFileId()).append(".").append(fileUpload.getFileEntity().getFileExtension()).append(",");
+//			}
+//			String picString = sBuilder.toString();
+//			if (picString.endsWith(",")) {
+//				picString = picString.substring(0, picString.length() - 1);
+//			}
+//			dgBuy.setPic(sBuilder.toString());
+//			super.update(dgBuy);
+//		}
 		
 //		if (StringUtils.hasLength(bizKeyString)) {
 //			List<FileUpload> list = new ArrayList<FileUpload>();
