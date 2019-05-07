@@ -36,7 +36,10 @@ import com.jeesite.modules.dg.service.DgBuyService;
 import com.jeesite.modules.dg.utils.ToolUtil;
 import com.jeesite.modules.file.entity.FileEntity;
 import com.jeesite.modules.file.entity.FileUpload;
+import com.jeesite.modules.file.entity.FileUploadParams;
+import com.jeesite.modules.file.service.FileEntityService;
 import com.jeesite.modules.file.service.FileUploadService;
+import com.jeesite.modules.file.service.FileUploadServiceExtend;
 import com.jeesite.modules.file.service.support.FileUploadServiceExtendSupport;
 import com.jeesite.modules.sys.entity.EmpUser;
 
@@ -54,6 +57,12 @@ public class DgBuyController extends BaseController {
 	
 	@Autowired
 	private FileUploadServiceExtendSupport fileUploadServiceExtend;
+	
+	@Autowired
+	private FileUploadService fileUploadService;
+	
+	@Autowired
+	private FileEntityService fileEntityService;
 	
 	/**
 	 * 获取数据
@@ -155,7 +164,7 @@ public class DgBuyController extends BaseController {
 						String name = file.getName();
 						String[] arr = name.split("\\.");
 						String fileExtension = arr[1];
-						String qiniuId = uploadToQiNiu(md5, dateString, fileSize, file.getName(),fileExtension);
+						String qiniuId = uploadToQiNiu(md5, dateString, fileSize, file.getName(),fileExtension, file.getAbsolutePath());
 						dgBuy.setRemark1(qiniuId);
 						dgBuyService.save(dgBuy);
 						System.out.println("copy finished:" + pathArray[i]);
@@ -172,11 +181,11 @@ public class DgBuyController extends BaseController {
 	}
 	
 	
-	private String uploadToQiNiu(String md5, String dateString, Long fileSize, String fileName, String fileExtension) {
+	private String uploadToQiNiu(String md5, String dateString, Long fileSize, String fileName, String fileExtension, String absolutePath) {
 		FileEntity fileEntity = new FileEntity();
 		fileEntity.setFileContentType("image/jpeg");
 		fileEntity.setFileExtension(fileExtension);
-		fileEntity.setFileId(ToolUtil.getNum19());
+		fileEntity.setFileId(fileName.replace("."+fileExtension, fileName));
 		fileEntity.setFileMd5(md5);
 		fileEntity.setFilePath(dateString);
 		fileEntity.setFileSize(fileSize);
@@ -190,6 +199,9 @@ public class DgBuyController extends BaseController {
 		fileUpload.setFileName(fileName);
 		fileUploadServiceExtend.saveUploadFile(fileUpload );
 		
+		fileEntityService.save(fileEntity);
+		fileUploadService.save(fileUpload);
+		
 		String fileUrl = fileUploadServiceExtend.getFileUrl(fileUpload);
 		if (fileUrl != null && fileUrl.length() > 0) {
 			String qiniuId = fileUrl.split("\\?")[0].replace("http://ppndeld0s.bkt.clouddn.com/", "");
@@ -197,6 +209,8 @@ public class DgBuyController extends BaseController {
 		}else {
 			return "";
 		}
+		
+	
 		
 	}
 	
