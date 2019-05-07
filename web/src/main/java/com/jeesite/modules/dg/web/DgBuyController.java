@@ -129,7 +129,7 @@ public class DgBuyController extends BaseController {
 	
 	private void processOne(DgBuy dgBuy) {
 		if (dgBuy != null) {
-			Pattern pattern = Pattern.compile("201[0-9]{5}");
+			Pattern pattern = Pattern.compile("201[0-9]{3}");
 			String path =  dgBuy.getPic(); 
 			System.out.println();
 			String[] pathArray = path.split(",");
