@@ -107,19 +107,22 @@ public class FileUploadServiceExtendImpl extends FileUploadServiceExtendSupport 
 
     @Override
     public void uploadFile(FileEntity fileEntity) {
+    	log.info("log: go into FileUloadServiceExtendImpl.upload");
         //super.uploadFile(fileEntity);
         getOssUploadService().uploadFile(fileEntity);
+        log.info("log: go out FileUloadServiceExtendImpl.upload");
     }
 
     @Override
     public boolean fileExists(FileEntity fileEntity) {
-        //return super.fileExists(fileEntity);
+    	log.info("log: go into FileUloadServiceExtendImpl.fileExists");
         return getOssUploadService().fileExists(fileEntity);
+        
     }
 
     @Override
     public String getFileUrl(FileUpload fileUpload) {
-        //return super.getFileUrl(fileUpload);
+    	log.info("log: go into FileUloadServiceExtendImpl.getFileUrl");
         return getOssUploadService().getFileUrl(fileUpload);
     }
 }

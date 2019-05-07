@@ -79,6 +79,7 @@ public class QiNiuOssUploaderService implements OssUploadService {
 
     @Override
     public String uploadFile(FileEntity fileEntity) {
+    	log.info("log: go into QiNiuOssUpload.uploadFile");
         init();
         UploadManager uploadManager = new UploadManager(cfg);
         String result = "";
@@ -90,7 +91,9 @@ public class QiNiuOssUploaderService implements OssUploadService {
             result = defaultPutRet.key;
         } catch (QiniuException ex) {
             log.error(ex.getMessage());
+            ex.printStackTrace();
         }
+        log.info("log: go out QiNiuOssUpload.uploadFile");
         return result;
     }
 
