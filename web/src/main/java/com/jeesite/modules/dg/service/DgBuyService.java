@@ -85,7 +85,7 @@ public class DgBuyService extends CrudService<DgBuyDao, DgBuy> {
 //			if (picString.endsWith(",")) {
 //				picString = picString.substring(0, picString.length() - 1);
 //			}
-//			dgBuy.setPic(sBuilder.toString());
+//			dgBuy.setRemark2(sBuilder.toString());
 //			super.update(dgBuy);
 //		}
 		
